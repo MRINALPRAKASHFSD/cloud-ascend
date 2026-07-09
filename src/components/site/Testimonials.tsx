@@ -33,7 +33,7 @@ export function Testimonials() {
               <div className="mt-6 flex items-center gap-3">
                 <div
                   className="h-9 w-9 rounded-full"
-                  style={{ background: `linear-gradient(135deg, hsl(${(i * 40) % 360} 90% 65%), hsl(${(i * 40 + 60) % 360} 90% 65%))` }}
+                  style={{ background: `linear-gradient(135deg, hsl(${195 + (i * 8) % 40} 65% 60%), hsl(${215 + (i * 8) % 30} 65% 50%))` }}
                 />
                 <div>
                   <div className="text-sm font-medium">{r.name}</div>
