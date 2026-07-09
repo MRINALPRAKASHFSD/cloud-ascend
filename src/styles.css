@@ -41,40 +41,96 @@
   --font-display: "Inter", "SF Pro Display", ui-sans-serif, system-ui, sans-serif;
 }
 
-:root {
+:root,
+.dark {
   --radius: 1.25rem;
 
-  /* Dark-first */
-  --background: oklch(0.14 0.02 260);
-  --foreground: oklch(0.98 0.005 250);
-  --card: oklch(0.18 0.025 260 / 0.6);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.16 0.02 260);
-  --popover-foreground: oklch(0.98 0.005 250);
-  --primary: oklch(0.82 0.15 220);
-  --primary-foreground: oklch(0.12 0.02 260);
-  --secondary: oklch(0.24 0.03 260);
-  --secondary-foreground: oklch(0.98 0.005 250);
-  --muted: oklch(0.22 0.025 260);
-  --muted-foreground: oklch(0.7 0.02 250);
-  --accent: oklch(0.28 0.05 260);
-  --accent-foreground: oklch(0.98 0.005 250);
-  --destructive: oklch(0.65 0.24 20);
-  --destructive-foreground: oklch(0.98 0.005 250);
+  /* Dark theme — deep midnight blue, editorial not neon */
+  --background: oklch(0.16 0.018 250);
+  --foreground: oklch(0.97 0.005 240);
+  --card: oklch(0.2 0.02 250 / 0.6);
+  --card-foreground: oklch(0.97 0.005 240);
+  --popover: oklch(0.18 0.02 250);
+  --popover-foreground: oklch(0.97 0.005 240);
+  --primary: oklch(0.78 0.13 230);
+  --primary-foreground: oklch(0.14 0.02 250);
+  --secondary: oklch(0.26 0.025 250);
+  --secondary-foreground: oklch(0.97 0.005 240);
+  --muted: oklch(0.24 0.02 250);
+  --muted-foreground: oklch(0.72 0.02 240);
+  --accent: oklch(0.3 0.04 240);
+  --accent-foreground: oklch(0.97 0.005 240);
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.97 0.005 240);
   --border: oklch(1 0 0 / 0.08);
   --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(0.82 0.15 220);
+  --ring: oklch(0.78 0.13 230);
 
-  --cyan-brand: oklch(0.86 0.14 220);
-  --blue-brand: oklch(0.72 0.18 250);
-  --violet-brand: oklch(0.68 0.2 295);
+  --cyan-brand: oklch(0.82 0.12 220);
+  --blue-brand: oklch(0.7 0.14 245);
 
-  --gradient-brand: linear-gradient(135deg, #4FD1FF 0%, #6AE3FF 45%, #8B5CF6 100%);
-  --gradient-aurora: radial-gradient(1200px 600px at 10% 0%, rgba(79, 209, 255, 0.25), transparent 60%),
-                     radial-gradient(1000px 500px at 90% 20%, rgba(139, 92, 246, 0.22), transparent 60%),
-                     radial-gradient(900px 500px at 50% 100%, rgba(106, 227, 255, 0.18), transparent 60%);
-  --shadow-glow: 0 20px 80px -20px rgba(79, 209, 255, 0.35), 0 8px 30px -10px rgba(139, 92, 246, 0.3);
-  --shadow-card: 0 10px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  /* Restrained, human palette: pale cyan → sky → deep slate blue */
+  --gradient-brand: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 45%, #3B6FE0 100%);
+  --gradient-aurora: radial-gradient(1200px 600px at 10% 0%, rgba(125, 211, 252, 0.22), transparent 60%),
+                     radial-gradient(1000px 500px at 90% 20%, rgba(59, 111, 224, 0.18), transparent 60%),
+                     radial-gradient(900px 500px at 50% 100%, rgba(148, 197, 255, 0.14), transparent 60%);
+  --shadow-glow: 0 20px 60px -20px rgba(56, 189, 248, 0.35), 0 8px 24px -10px rgba(59, 111, 224, 0.25);
+  --shadow-card: 0 10px 40px -10px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+
+  --glass-bg-1: rgba(255, 255, 255, 0.06);
+  --glass-bg-2: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-strong-bg-1: rgba(255, 255, 255, 0.09);
+  --glass-strong-bg-2: rgba(255, 255, 255, 0.03);
+  --glass-strong-border: rgba(255, 255, 255, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --vignette: radial-gradient(ellipse at center, transparent 40%, rgba(8, 12, 24, 0.55) 100%);
+  --selection-bg: rgba(56, 189, 248, 0.35);
+  --selection-fg: #fff;
+}
+
+/* Light theme — warm paper, editorial, human */
+.light {
+  --background: oklch(0.985 0.004 90);
+  --foreground: oklch(0.2 0.02 250);
+  --card: oklch(1 0 0 / 0.7);
+  --card-foreground: oklch(0.2 0.02 250);
+  --popover: oklch(0.99 0.003 90);
+  --popover-foreground: oklch(0.2 0.02 250);
+  --primary: oklch(0.55 0.15 245);
+  --primary-foreground: oklch(0.99 0.003 90);
+  --secondary: oklch(0.95 0.008 240);
+  --secondary-foreground: oklch(0.2 0.02 250);
+  --muted: oklch(0.94 0.008 240);
+  --muted-foreground: oklch(0.45 0.02 250);
+  --accent: oklch(0.94 0.02 230);
+  --accent-foreground: oklch(0.2 0.02 250);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.99 0.003 90);
+  --border: oklch(0.2 0.02 250 / 0.1);
+  --input: oklch(0.2 0.02 250 / 0.08);
+  --ring: oklch(0.55 0.15 245);
+
+  --cyan-brand: oklch(0.55 0.14 230);
+  --blue-brand: oklch(0.5 0.16 245);
+
+  --gradient-brand: linear-gradient(135deg, #38BDF8 0%, #3B82F6 55%, #2A4FBF 100%);
+  --gradient-aurora: radial-gradient(1200px 600px at 10% 0%, rgba(56, 189, 248, 0.18), transparent 60%),
+                     radial-gradient(1000px 500px at 90% 20%, rgba(59, 130, 246, 0.14), transparent 60%),
+                     radial-gradient(900px 500px at 50% 100%, rgba(255, 255, 255, 0.6), transparent 60%);
+  --shadow-glow: 0 20px 50px -20px rgba(59, 130, 246, 0.35), 0 8px 24px -10px rgba(59, 111, 224, 0.2);
+  --shadow-card: 0 10px 30px -12px rgba(20, 40, 90, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+
+  --glass-bg-1: rgba(255, 255, 255, 0.75);
+  --glass-bg-2: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(20, 40, 90, 0.08);
+  --glass-strong-bg-1: rgba(255, 255, 255, 0.85);
+  --glass-strong-bg-2: rgba(255, 255, 255, 0.65);
+  --glass-strong-border: rgba(20, 40, 90, 0.1);
+  --grid-line: rgba(20, 40, 90, 0.05);
+  --vignette: radial-gradient(ellipse at center, transparent 45%, rgba(240, 244, 255, 0.7) 100%);
+  --selection-bg: rgba(59, 130, 246, 0.25);
+  --selection-fg: #0b1220;
 }
 
 @layer base {
