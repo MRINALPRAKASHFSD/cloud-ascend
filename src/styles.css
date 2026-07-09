@@ -150,22 +150,22 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: rgba(79, 209, 255, 0.35);
-    color: #fff;
+    background: var(--selection-bg);
+    color: var(--selection-fg);
   }
 }
 
 @utility glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, var(--glass-bg-1), var(--glass-bg-2));
   backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-card);
 }
 
 @utility glass-strong {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(180deg, var(--glass-strong-bg-1), var(--glass-strong-bg-2));
   backdrop-filter: blur(28px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-strong-border);
   box-shadow: var(--shadow-card);
 }
 
@@ -184,7 +184,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(79, 209, 255, 0.6), rgba(139, 92, 246, 0.6), rgba(79, 209, 255, 0.2));
+    background: linear-gradient(135deg, color-mix(in oklab, var(--cyan-brand) 70%, transparent), color-mix(in oklab, var(--blue-brand) 70%, transparent), color-mix(in oklab, var(--cyan-brand) 20%, transparent));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
@@ -208,8 +208,8 @@
 
 @utility grid-bg {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
 }
