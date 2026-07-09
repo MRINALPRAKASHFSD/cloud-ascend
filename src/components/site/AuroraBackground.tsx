@@ -20,19 +20,20 @@ export function AuroraBackground() {
       {/* Base gradient wash */}
       <div className="absolute inset-0" style={{ background: "var(--gradient-aurora)" }} />
 
-      {/* Floating blobs */}
+      {/* Floating blobs — restrained sky/blue palette */}
       <motion.div
-        className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full opacity-40 blur-3xl animate-aurora"
-        style={{ background: "radial-gradient(circle, #4FD1FF, transparent 60%)" }}
+        className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full opacity-30 blur-3xl animate-aurora"
+        style={{ background: "radial-gradient(circle, #7DD3FC, transparent 60%)" }}
       />
       <motion.div
-        className="absolute top-1/3 -right-40 h-[700px] w-[700px] rounded-full opacity-30 blur-3xl animate-aurora"
-        style={{ background: "radial-gradient(circle, #8B5CF6, transparent 60%)", animationDelay: "-6s" }}
+        className="absolute top-1/3 -right-40 h-[700px] w-[700px] rounded-full opacity-25 blur-3xl animate-aurora"
+        style={{ background: "radial-gradient(circle, #3B6FE0, transparent 60%)", animationDelay: "-6s" }}
       />
       <motion.div
-        className="absolute bottom-0 left-1/3 h-[500px] w-[500px] rounded-full opacity-25 blur-3xl animate-aurora"
-        style={{ background: "radial-gradient(circle, #6AE3FF, transparent 60%)", animationDelay: "-12s" }}
+        className="absolute bottom-0 left-1/3 h-[500px] w-[500px] rounded-full opacity-20 blur-3xl animate-aurora"
+        style={{ background: "radial-gradient(circle, #94C5FF, transparent 60%)", animationDelay: "-12s" }}
       />
+
 
       {/* Grid */}
       <div className="absolute inset-0 grid-bg opacity-60" />
