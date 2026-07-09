@@ -87,13 +87,16 @@ export function Navbar() {
               })}
             </ul>
 
-            <a
-              href="#contact"
-              className="ml-2 hidden rounded-full px-4 py-2 text-sm font-medium text-primary-foreground shadow-[0_8px_30px_-8px_rgba(79,209,255,0.6)] transition-transform hover:scale-[1.03] active:scale-95 md:inline-block"
-              style={{ background: "var(--gradient-brand)" }}
-            >
-              Join Community
-            </a>
+            <div className="ml-2 flex items-center gap-2">
+              <ThemeToggle />
+              <a
+                href="#contact"
+                className="hidden rounded-full px-4 py-2 text-sm font-medium text-primary-foreground shadow-[0_8px_30px_-8px_rgba(56,189,248,0.55)] transition-transform hover:scale-[1.03] active:scale-95 md:inline-block"
+                style={{ background: "var(--gradient-brand)" }}
+              >
+                Join Community
+              </a>
+            </div>
           </nav>
         </motion.header>
       )}
