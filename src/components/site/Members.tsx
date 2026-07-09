@@ -14,11 +14,11 @@ const members: {
   hue: number;
 }[] = [
   { name: "Aarav Sharma", role: "Lead", position: "Center Lead · Cloud Architect", skills: ["AWS", "Terraform", "K8s"], hue: 200 },
-  { name: "Ishita Verma", role: "Core", position: "SRE & Platform", skills: ["GCP", "Go", "Prometheus"], hue: 260 },
+  { name: "Ishita Verma", role: "Core", position: "SRE & Platform", skills: ["GCP", "Go", "Prometheus"], hue: 215 },
   { name: "Rohan Mehta", role: "Core", position: "AI Infrastructure", skills: ["PyTorch", "Ray", "Triton"], hue: 220 },
-  { name: "Kavya Iyer", role: "Core", position: "Edge & Serverless", skills: ["Cloudflare", "Rust", "WASM"], hue: 280 },
+  { name: "Kavya Iyer", role: "Core", position: "Edge & Serverless", skills: ["Cloudflare", "Rust", "WASM"], hue: 225 },
   { name: "Dev Kapoor", role: "Mentor", position: "Industry Mentor · Ex-AWS", skills: ["Systems", "Design"], hue: 190 },
-  { name: "Prof. R. Nair", role: "Faculty", position: "Faculty Advisor · Distributed Systems", skills: ["Research", "Papers"], hue: 250 },
+  { name: "Prof. R. Nair", role: "Faculty", position: "Faculty Advisor · Distributed Systems", skills: ["Research", "Papers"], hue: 220 },
   { name: "Simran Kaur", role: "Core", position: "DevRel & Community", skills: ["Content", "OSS"], hue: 210 },
   { name: "Aditya Rao", role: "Core", position: "Security & Compliance", skills: ["Zero-trust", "IAM"], hue: 240 },
 ];
@@ -84,14 +84,14 @@ export function Members() {
                 transition={{ duration: 0.5, delay: i * 0.04 }}
               >
                 <TiltCard className="glass gradient-border group relative h-full overflow-hidden rounded-3xl p-6">
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `radial-gradient(300px 200px at 30% 0%, hsla(${m.hue},100%,70%,0.18), transparent 70%)` }} />
+                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `radial-gradient(300px 200px at 30% 0%, hsla(${m.hue}, 80%, 65%, 0.14), transparent 70%)` }} />
                   <div className="relative" style={{ transform: "translateZ(30px)" }}>
                     <div
                       className="relative grid h-20 w-20 place-items-center rounded-full text-2xl font-semibold"
-                      style={{ background: `linear-gradient(135deg, hsl(${m.hue} 90% 65%), hsl(${(m.hue + 60) % 360} 90% 65%))` }}
+                      style={{ background: `linear-gradient(135deg, hsl(${m.hue} 70% 62%), hsl(${(m.hue + 25) % 360} 70% 55%))` }}
                     >
                       <span className="text-white/95">{m.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}</span>
-                      <span className="absolute inset-0 rounded-full opacity-50 blur-xl" style={{ background: `hsl(${m.hue} 90% 65%)` }} />
+                      <span className="absolute inset-0 rounded-full opacity-50 blur-xl" style={{ background: `hsl(${m.hue} 70% 62%)` }} />
                     </div>
                     <div className="mt-5 flex items-center gap-2">
                       <span className="glass rounded-full px-2 py-0.5 text-[10px] uppercase tracking-widest text-cyan-brand">{m.role}</span>
