@@ -84,7 +84,7 @@ export function Hero() {
             <div className="mt-16 grid max-w-2xl grid-cols-2 gap-4 sm:grid-cols-4">
               {metrics.map((m, i) => (
                 <motion.div
-                  key={m.label}
+                  key={m.id ?? m.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.5 + i * 0.08 }}
@@ -92,7 +92,7 @@ export function Hero() {
                 >
                   <div className="text-2xl font-semibold tracking-tight">
                     <AnimatedCounter to={m.value} />
-                    {m.suffix}
+                    {m.suffix ?? ""}
                   </div>
                   <div className="mt-1 text-xs text-muted-foreground">{m.label}</div>
                 </motion.div>
