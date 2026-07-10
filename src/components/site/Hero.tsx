@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, Cloud, Server, Database, Cpu, Zap } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
 import { AnimatedCounter } from "./AnimatedCounter";
+
 
 const metrics = [
   { label: "Active Members", value: 120, suffix: "+" },
