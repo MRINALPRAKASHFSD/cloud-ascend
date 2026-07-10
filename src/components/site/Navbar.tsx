@@ -88,6 +88,15 @@ export function Navbar() {
             </ul>
 
             <div className="ml-2 flex items-center gap-2">
+              <button
+                type="button"
+                aria-label="Open command palette"
+                onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
+                className="glass hidden items-center gap-2 rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
+              >
+                <span>Quick search</span>
+                <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+              </button>
               <ThemeToggle />
               <a
                 href="#contact"
@@ -97,6 +106,7 @@ export function Navbar() {
                 Join Community
               </a>
             </div>
+
           </nav>
         </motion.header>
       )}
