@@ -24,10 +24,32 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.colorScheme = theme;
   }, [theme]);
 
-  const setTheme = (t: Theme) => {
-    setThemeState(t);
-    try { localStorage.setItem(STORAGE_KEY, t); } catch {}
+  const applyTheme = (t: Theme) => {
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const root = document.documentElement;
+
+    const commit = () => {
+      setThemeState(t);
+      try { localStorage.setItem(STORAGE_KEY, t); } catch {}
+    };
+
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (!reduce && typeof doc.startViewTransition === "function") {
+      doc.startViewTransition(() => commit());
+      return;
+    }
+
+    // Fallback: temporarily enable CSS transitions on theme-sensitive properties.
+    if (!reduce) {
+      root.classList.add("theme-transitioning");
+      window.setTimeout(() => root.classList.remove("theme-transitioning"), 400);
+    }
+    commit();
   };
+
+  const setTheme = (t: Theme) => applyTheme(t);
 
   return (
     <ThemeCtx.Provider value={{ theme, setTheme, toggle: () => setTheme(theme === "dark" ? "light" : "dark") }}>
