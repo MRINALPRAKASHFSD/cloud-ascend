@@ -142,8 +142,8 @@ function CloudVisual() {
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         <defs>
           <linearGradient id="line" x1="0" x2="1">
-            <stop offset="0%" stopColor="#4FD1FF" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.6" />
+            <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#3B6FE0" stopOpacity="0.6" />
           </linearGradient>
         </defs>
         {[[18, 24], [78, 26], [80, 72], [16, 72]].map(([x, y], i) => (

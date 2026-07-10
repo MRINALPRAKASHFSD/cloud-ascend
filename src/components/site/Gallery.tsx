@@ -5,15 +5,15 @@ import { SectionHeader } from "./SectionHeader";
 
 // Procedurally-generated abstract "photos" for the gallery
 const items = [
-  { h: 220, g: "linear-gradient(135deg,#4FD1FF,#8B5CF6)", label: "CloudCon '25 Keynote" },
-  { h: 320, g: "linear-gradient(135deg,#6AE3FF,#4FD1FF)", label: "Serverless Workshop" },
-  { h: 260, g: "linear-gradient(135deg,#8B5CF6,#4FD1FF)", label: "Hackathon Finals" },
-  { h: 300, g: "linear-gradient(135deg,#4FD1FF,#6AE3FF)", label: "Mentor Meetup" },
-  { h: 240, g: "linear-gradient(135deg,#8B5CF6,#6AE3FF)", label: "AWS Deep Dive" },
-  { h: 340, g: "linear-gradient(135deg,#6AE3FF,#8B5CF6)", label: "Team Retreat" },
-  { h: 260, g: "linear-gradient(135deg,#4FD1FF,#8B5CF6)", label: "Certification Day" },
-  { h: 280, g: "linear-gradient(135deg,#8B5CF6,#4FD1FF)", label: "K8s Bootcamp" },
-  { h: 320, g: "linear-gradient(135deg,#4FD1FF,#6AE3FF)", label: "Edge Compute Seminar" },
+  { h: 220, g: "linear-gradient(135deg,#7DD3FC,#3B6FE0)", label: "CloudCon '25 Keynote" },
+  { h: 320, g: "linear-gradient(135deg,#38BDF8,#7DD3FC)", label: "Serverless Workshop" },
+  { h: 260, g: "linear-gradient(135deg,#3B6FE0,#7DD3FC)", label: "Hackathon Finals" },
+  { h: 300, g: "linear-gradient(135deg,#7DD3FC,#38BDF8)", label: "Mentor Meetup" },
+  { h: 240, g: "linear-gradient(135deg,#3B6FE0,#38BDF8)", label: "AWS Deep Dive" },
+  { h: 340, g: "linear-gradient(135deg,#38BDF8,#3B6FE0)", label: "Team Retreat" },
+  { h: 260, g: "linear-gradient(135deg,#7DD3FC,#3B6FE0)", label: "Certification Day" },
+  { h: 280, g: "linear-gradient(135deg,#3B6FE0,#7DD3FC)", label: "K8s Bootcamp" },
+  { h: 320, g: "linear-gradient(135deg,#7DD3FC,#38BDF8)", label: "Edge Compute Seminar" },
 ];
 
 export function Gallery() {

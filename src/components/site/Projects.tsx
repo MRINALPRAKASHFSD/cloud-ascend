@@ -15,12 +15,12 @@ const projects: {
   featured?: boolean;
   gradient: string;
 }[] = [
-  { id: "a", title: "NimbusGate", tag: "Infra", status: "Live", desc: "A student-built API gateway with edge caching, rate limits and observability — running on Cloudflare Workers.", stack: ["Rust", "Workers", "OTel"], featured: true, gradient: "linear-gradient(135deg,#4FD1FF,#8B5CF6)" },
-  { id: "b", title: "Cirrus AI", tag: "AI", status: "Beta", desc: "Serverless inference orchestrator with cost-aware routing across GPU providers.", stack: ["Python", "Ray", "Redis"], gradient: "linear-gradient(135deg,#6AE3FF,#4FD1FF)" },
-  { id: "c", title: "Stratus", tag: "Web", status: "Live", desc: "Beautiful dashboards for your cloud spend — real-time, multi-cloud, opinionated.", stack: ["Next.js", "tRPC", "Postgres"], gradient: "linear-gradient(135deg,#8B5CF6,#4FD1FF)" },
-  { id: "d", title: "Alto Mesh", tag: "Infra", status: "R&D", desc: "A lightweight service mesh for university-scale microservices — no sidecar, just eBPF.", stack: ["Go", "eBPF", "K8s"], gradient: "linear-gradient(135deg,#4FD1FF,#6AE3FF)" },
-  { id: "e", title: "Vector Vault", tag: "Research", status: "R&D", desc: "Efficient encrypted vector search over multi-tenant workloads.", stack: ["C++", "CUDA"], gradient: "linear-gradient(135deg,#8B5CF6,#6AE3FF)" },
-  { id: "f", title: "SkyLab", tag: "Web", status: "Beta", desc: "One-click reproducible cloud labs for the classroom.", stack: ["Docker", "React"], gradient: "linear-gradient(135deg,#6AE3FF,#8B5CF6)" },
+  { id: "a", title: "NimbusGate", tag: "Infra", status: "Live", desc: "A student-built API gateway with edge caching, rate limits and observability — running on Cloudflare Workers.", stack: ["Rust", "Workers", "OTel"], featured: true, gradient: "linear-gradient(135deg,#7DD3FC,#3B6FE0)" },
+  { id: "b", title: "Cirrus AI", tag: "AI", status: "Beta", desc: "Serverless inference orchestrator with cost-aware routing across GPU providers.", stack: ["Python", "Ray", "Redis"], gradient: "linear-gradient(135deg,#38BDF8,#7DD3FC)" },
+  { id: "c", title: "Stratus", tag: "Web", status: "Live", desc: "Beautiful dashboards for your cloud spend — real-time, multi-cloud, opinionated.", stack: ["Next.js", "tRPC", "Postgres"], gradient: "linear-gradient(135deg,#3B6FE0,#7DD3FC)" },
+  { id: "d", title: "Alto Mesh", tag: "Infra", status: "R&D", desc: "A lightweight service mesh for university-scale microservices — no sidecar, just eBPF.", stack: ["Go", "eBPF", "K8s"], gradient: "linear-gradient(135deg,#7DD3FC,#38BDF8)" },
+  { id: "e", title: "Vector Vault", tag: "Research", status: "R&D", desc: "Efficient encrypted vector search over multi-tenant workloads.", stack: ["C++", "CUDA"], gradient: "linear-gradient(135deg,#3B6FE0,#38BDF8)" },
+  { id: "f", title: "SkyLab", tag: "Web", status: "Beta", desc: "One-click reproducible cloud labs for the classroom.", stack: ["Docker", "React"], gradient: "linear-gradient(135deg,#38BDF8,#3B6FE0)" },
 ];
 
 const cats: Cat[] = ["All", "AI", "Infra", "Web", "Research"];
