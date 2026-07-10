@@ -23,9 +23,12 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <div className="relative">
+      <BootLoader />
+      <CommandPalette />
       <AuroraBackground />
       <CursorGlow />
       <Navbar />
+
       <main>
         <Hero />
         <About />
