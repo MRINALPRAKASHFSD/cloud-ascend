@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Cloud } from "lucide-react";
+import { Cloud, LockKeyhole } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
@@ -98,6 +99,14 @@ export function Navbar() {
                 <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
               </button>
               <ThemeToggle />
+              <Link
+                to="/admin"
+                aria-label="Open admin"
+                title="Admin"
+                className="glass hidden h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:inline-flex"
+              >
+                <LockKeyhole className="h-3.5 w-3.5" />
+              </Link>
               <a
                 href="#contact"
                 className="hidden rounded-full px-4 py-2 text-sm font-medium text-primary-foreground shadow-[0_8px_30px_-8px_rgba(56,189,248,0.55)] transition-transform hover:scale-[1.03] active:scale-95 md:inline-block"
