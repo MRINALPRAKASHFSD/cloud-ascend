@@ -35,11 +35,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       try { localStorage.setItem(STORAGE_KEY, t); } catch {}
     };
 
-    // Native View Transition — clean crossfade, honors reduced motion via CSS.
-    // @ts-expect-error - startViewTransition is not yet in lib.dom for all TS versions
-    if (!reduce && typeof document.startViewTransition === "function") {
-      // @ts-expect-error - same as above
-      document.startViewTransition(() => commit());
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (!reduce && typeof doc.startViewTransition === "function") {
+      doc.startViewTransition(() => commit());
       return;
     }
 
