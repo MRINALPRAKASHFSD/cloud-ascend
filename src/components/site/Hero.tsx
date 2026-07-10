@@ -105,71 +105,164 @@ export function Hero() {
   );
 }
 
+type NodeDef = {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  label: string;
+  x: number; // 0-100
+  y: number; // 0-100
+  d: number;
+  desc: string;
+  tags: string[];
+};
+
+const NODES: NodeDef[] = [
+  { icon: Server, label: "Compute", x: 14, y: 20, d: 0, desc: "Autoscaling containers on Kubernetes and Nomad clusters.", tags: ["K8s", "Nomad", "eBPF"] },
+  { icon: Database, label: "Storage", x: 82, y: 22, d: 0.2, desc: "Object, block and vector stores tuned for AI workloads.", tags: ["S3", "pgvector", "R2"] },
+  { icon: Cpu, label: "AI", x: 84, y: 72, d: 0.4, desc: "Serverless inference with cost-aware GPU routing.", tags: ["Ray", "Triton", "vLLM"] },
+  { icon: Zap, label: "Edge", x: 12, y: 74, d: 0.6, desc: "Sub-30ms delivery across 300+ points of presence.", tags: ["Workers", "WASM", "CDN"] },
+];
+
 function CloudVisual() {
-  const nodes = [
-    { icon: Server, label: "Compute", x: "12%", y: "18%", d: 0 },
-    { icon: Database, label: "Storage", x: "78%", y: "22%", d: 0.2 },
-    { icon: Cpu, label: "AI", x: "82%", y: "70%", d: 0.4 },
-    { icon: Zap, label: "Edge", x: "10%", y: "72%", d: 0.6 },
-  ];
+  const ref = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-1, 1], [10, -10]), { stiffness: 120, damping: 20 });
+  const ry = useSpring(useTransform(mx, [-1, 1], [-12, 12]), { stiffness: 120, damping: 20 });
+  const [hover, setHover] = useState<string | null>(null);
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+  const onLeave = () => { mx.set(0); my.set(0); setHover(null); };
 
   return (
     <motion.div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      style={{ perspective: 1200 }}
       className="relative mx-auto aspect-square w-full max-w-[520px]"
     >
-      {/* Rotating rings */}
-      <div className="absolute inset-0 grid place-items-center">
-        <div className="absolute h-full w-full rounded-full border border-white/5 animate-spin-slow" />
-        <div className="absolute h-[80%] w-[80%] rounded-full border border-white/8" style={{ animation: "spin-slow 60s linear infinite reverse" }} />
-        <div className="absolute h-[55%] w-[55%] rounded-full border border-cyan-brand/20 animate-spin-slow" style={{ animationDuration: "30s" }} />
-      </div>
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        className="relative h-full w-full"
+      >
+        {/* Rotating rings */}
+        <div className="absolute inset-0 grid place-items-center">
+          <div className="absolute h-full w-full rounded-full border border-white/5 animate-spin-slow" />
+          <div className="absolute h-[80%] w-[80%] rounded-full border border-white/8" style={{ animation: "spin-slow 60s linear infinite reverse" }} />
+          <div className="absolute h-[55%] w-[55%] rounded-full border border-cyan-brand/20 animate-spin-slow" style={{ animationDuration: "30s" }} />
+        </div>
 
-      {/* Glow core */}
-      <div className="absolute inset-0 grid place-items-center">
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="relative grid h-40 w-40 place-items-center rounded-full"
-          style={{ background: "var(--gradient-brand)", boxShadow: "var(--shadow-glow)" }}
-        >
-          <div className="absolute inset-0 rounded-full opacity-70 blur-2xl" style={{ background: "var(--gradient-brand)" }} />
-          <Cloud className="relative h-14 w-14 text-white" strokeWidth={1.5} />
-        </motion.div>
-      </div>
+        {/* Glow core */}
+        <div className="absolute inset-0 grid place-items-center">
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="relative grid h-40 w-40 place-items-center rounded-full"
+            style={{ background: "var(--gradient-brand)", boxShadow: "var(--shadow-glow)" }}
+          >
+            <div className="absolute inset-0 rounded-full opacity-70 blur-2xl" style={{ background: "var(--gradient-brand)" }} />
+            <Cloud className="relative h-14 w-14 text-white" strokeWidth={1.5} />
+          </motion.div>
+        </div>
 
-      {/* Connecting lines */}
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="line" x1="0" x2="1">
-            <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#3B6FE0" stopOpacity="0.6" />
-          </linearGradient>
-        </defs>
-        {[[18, 24], [78, 26], [80, 72], [16, 72]].map(([x, y], i) => (
-          <line key={i} x1="50" y1="50" x2={x} y2={y} stroke="url(#line)" strokeWidth="0.3" strokeDasharray="1 1.2">
-            <animate attributeName="stroke-dashoffset" from="0" to="10" dur="4s" repeatCount="indefinite" />
-          </line>
-        ))}
-      </svg>
+        {/* Connecting lines + data packets */}
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="line" x1="0" x2="1">
+              <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#3B6FE0" stopOpacity="0.6" />
+            </linearGradient>
+            <radialGradient id="packet">
+              <stop offset="0%" stopColor="#E0F2FE" stopOpacity="1" />
+              <stop offset="60%" stopColor="#7DD3FC" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#7DD3FC" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          {NODES.map((n, i) => {
+            const active = hover === n.label;
+            return (
+              <g key={n.label}>
+                <line
+                  x1="50" y1="50" x2={n.x} y2={n.y}
+                  stroke="url(#line)"
+                  strokeWidth={active ? 0.6 : 0.3}
+                  strokeDasharray="1 1.2"
+                  style={{ transition: "stroke-width 300ms" }}
+                >
+                  <animate attributeName="stroke-dashoffset" from="0" to="10" dur="4s" repeatCount="indefinite" />
+                </line>
+                {/* animated data packet */}
+                <circle r={active ? 1.4 : 1} fill="url(#packet)">
+                  <animateMotion
+                    dur={`${3 + i * 0.6}s`}
+                    repeatCount="indefinite"
+                    path={`M 50 50 L ${n.x} ${n.y}`}
+                    keyPoints="0;1" keyTimes="0;1"
+                  />
+                  <animate attributeName="opacity" values="0;1;1;0" dur={`${3 + i * 0.6}s`} repeatCount="indefinite" />
+                </circle>
+              </g>
+            );
+          })}
+        </svg>
 
-      {/* Nodes */}
-      {nodes.map((n) => (
-        <motion.div
-          key={n.label}
-          className="absolute -translate-x-1/2 -translate-y-1/2"
-          style={{ left: n.x, top: n.y }}
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 5 + n.d * 2, delay: n.d, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="glass-strong flex items-center gap-2 rounded-2xl px-3 py-2 shadow-[0_10px_30px_-10px_rgba(79,209,255,0.5)]">
-            <n.icon className="h-4 w-4 text-cyan-brand" />
-            <span className="text-xs font-medium">{n.label}</span>
-          </div>
-        </motion.div>
-      ))}
+        {/* Nodes */}
+        {NODES.map((n) => {
+          const active = hover === n.label;
+          const Icon = n.icon;
+          return (
+            <motion.div
+              key={n.label}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${n.x}%`, top: `${n.y}%`, zIndex: active ? 20 : 10 }}
+              animate={{ y: active ? -4 : [0, -12, 0] }}
+              transition={{ duration: 5 + n.d * 2, delay: n.d, repeat: active ? 0 : Infinity, ease: "easeInOut" }}
+              onMouseEnter={() => setHover(n.label)}
+              onFocus={() => setHover(n.label)}
+              tabIndex={0}
+            >
+              <motion.div
+                layout
+                transition={{ type: "spring", stiffness: 340, damping: 28 }}
+                className="glass-strong flex flex-col rounded-2xl px-3 py-2 shadow-[0_10px_30px_-10px_rgba(79,209,255,0.5)]"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 text-cyan-brand" />
+                  <span className="text-xs font-medium">{n.label}</span>
+                  <span className="ml-1 h-1.5 w-1.5 rounded-full bg-cyan-brand animate-pulse" />
+                </div>
+                {active && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className="mt-2 max-w-[180px] overflow-hidden"
+                  >
+                    <p className="text-[10px] leading-relaxed text-muted-foreground">{n.desc}</p>
+                    <div className="mt-1.5 flex flex-wrap gap-1">
+                      {n.tags.map((t) => (
+                        <span key={t} className="rounded-full bg-white/10 px-1.5 py-0.5 text-[9px] text-foreground/80">{t}</span>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
     </motion.div>
   );
 }
+
