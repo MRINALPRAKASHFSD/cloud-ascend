@@ -3,13 +3,14 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, Cloud, Server, Database, Cpu, Zap } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { usePublicHeroStats, type PublicHeroStat } from "@/lib/usePublicCms";
 
 
-const metrics = [
-  { label: "Active Members", value: 120, suffix: "+" },
-  { label: "Projects Shipped", value: 42, suffix: "" },
-  { label: "Events Hosted", value: 28, suffix: "" },
-  { label: "Certifications", value: 340, suffix: "+" },
+const fallbackMetrics: PublicHeroStat[] = [
+  { id: "1", label: "Active Members", value: 120, suffix: "+", sort_order: 0 },
+  { id: "2", label: "Projects Shipped", value: 42, suffix: "", sort_order: 1 },
+  { id: "3", label: "Events Hosted", value: 28, suffix: "", sort_order: 2 },
+  { id: "4", label: "Certifications", value: 340, suffix: "+", sort_order: 3 },
 ];
 
 export function Hero() {
