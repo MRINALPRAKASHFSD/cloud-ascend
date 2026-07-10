@@ -12,6 +12,9 @@ import { Gallery } from "@/components/site/Gallery";
 import { Testimonials } from "@/components/site/Testimonials";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
+import { CommandPalette } from "@/components/site/CommandPalette";
+import { BootLoader } from "@/components/site/BootLoader";
+
 
 export const Route = createFileRoute("/")({
   component: Home,
