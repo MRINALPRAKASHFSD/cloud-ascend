@@ -1,8 +1,21 @@
 import { Cloud, Github, Linkedin, Twitter, ArrowUp } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePublicFooterLinks, type PublicFooterLink } from "@/lib/usePublicCms";
+
+const fallback: PublicFooterLink[] = [
+  { id: "e1", section: "Explore", label: "About", url: "#about", external: false, sort_order: 0 },
+  { id: "e2", section: "Explore", label: "Events", url: "#events", external: false, sort_order: 1 },
+  { id: "e3", section: "Explore", label: "Projects", url: "#projects", external: false, sort_order: 2 },
+  { id: "e4", section: "Explore", label: "Members", url: "#members", external: false, sort_order: 3 },
+  { id: "r1", section: "Resources", label: "Gallery", url: "#gallery", external: false, sort_order: 0 },
+  { id: "r2", section: "Resources", label: "Contact", url: "#contact", external: false, sort_order: 1 },
+  { id: "r3", section: "Resources", label: "GitHub", url: "#", external: true, sort_order: 2 },
+  { id: "r4", section: "Resources", label: "Handbook", url: "#", external: true, sort_order: 3 },
+];
 
 export function Footer() {
+  const { data: links } = usePublicFooterLinks(fallback);
   const { scrollYProgress } = useScroll();
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const [top, setTop] = useState(false);
@@ -11,6 +24,16 @@ export function Footer() {
     window.addEventListener("scroll", on);
     return () => window.removeEventListener("scroll", on);
   }, []);
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, PublicFooterLink[]>();
+    for (const l of links) {
+      const arr = map.get(l.section) ?? [];
+      arr.push(l);
+      map.set(l.section, arr);
+    }
+    return Array.from(map.entries());
+  }, [links]);
 
   return (
     <footer className="relative border-t border-white/5 py-16">
@@ -39,23 +62,25 @@ export function Footer() {
               ))}
             </div>
           </div>
-          <div>
-            <h5 className="text-sm font-semibold">Explore</h5>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {["About", "Events", "Projects", "Members"].map((l) => (
-                <li key={l}><a href={`#${l.toLowerCase()}`} className="transition-colors hover:text-foreground">{l}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-sm font-semibold">Resources</h5>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><a href="#gallery" className="transition-colors hover:text-foreground">Gallery</a></li>
-              <li><a href="#contact" className="transition-colors hover:text-foreground">Contact</a></li>
-              <li><a href="#" className="transition-colors hover:text-foreground">GitHub</a></li>
-              <li><a href="#" className="transition-colors hover:text-foreground">Handbook</a></li>
-            </ul>
-          </div>
+          {grouped.slice(0, 2).map(([section, items]) => (
+            <div key={section}>
+              <h5 className="text-sm font-semibold">{section}</h5>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                {items.map((l) => (
+                  <li key={l.id}>
+                    <a
+                      href={l.url}
+                      target={l.external ? "_blank" : undefined}
+                      rel={l.external ? "noreferrer" : undefined}
+                      className="transition-colors hover:text-foreground"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-xs text-muted-foreground sm:flex-row">
