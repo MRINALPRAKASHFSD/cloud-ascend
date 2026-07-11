@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Cloud, Loader2, Mail, Lock, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AuroraBackground } from "@/components/site/AuroraBackground";
-import { lovable } from "@/integrations/lovable/index";
+
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
@@ -53,11 +53,13 @@ function AuthPage() {
   const onGoogle = async () => {
     setBusy(true);
     try {
-      const res = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/auth",
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/admin",
+        }
       });
-      if (res.error) throw res.error;
-      if (!res.redirected) navigate({ to: "/admin" });
+      if (error) throw error;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Google sign-in failed";
       toast.error(msg);
