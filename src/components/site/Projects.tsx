@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink, CircleDot, FolderGit2 } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
