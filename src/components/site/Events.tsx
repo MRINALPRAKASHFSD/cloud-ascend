@@ -12,21 +12,35 @@ const fallbackEvents: PublicEvent[] = [
   { id: "5", title: "AWS Cloud Practitioner Prep", tag: "Certification", location: "Lab 4A", starts_at: "2026-03-05T10:00:00Z", ends_at: "2026-03-19T10:00:00Z", summary: "Full exam prep + free voucher for top participants.", sort_order: 4 },
 ];
 
-function useCountdown(iso: string | null) {
-  const [now, setNow] = useState(Date.now());
+function Countdown({ iso }: { iso: string | null }) {
+  const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
+    if (!iso) return;
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [iso]);
   const target = iso ? new Date(iso).getTime() : now;
   const diff = Math.max(0, target - now);
-  return {
+  const cd = {
     d: Math.floor(diff / 86400000),
     h: Math.floor((diff % 86400000) / 3600000),
     m: Math.floor((diff % 3600000) / 60000),
     s: Math.floor((diff % 60000) / 1000),
   };
+  return (
+    <div className="grid grid-cols-4 gap-2">
+      {[{ l: "Days", v: cd.d }, { l: "Hrs", v: cd.h }, { l: "Min", v: cd.m }, { l: "Sec", v: cd.s }].map((c) => (
+        <div key={c.l} className="glass rounded-2xl p-4 text-center">
+          <div className="font-mono text-3xl font-semibold tracking-tight tabular-nums md:text-4xl">
+            {String(c.v).padStart(2, "0")}
+          </div>
+          <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">{c.l}</div>
+        </div>
+      ))}
+    </div>
+  );
 }
+
 
 function formatDate(iso: string | null) {
   if (!iso) return "TBA";
