@@ -131,16 +131,8 @@ export function Events() {
                 Register now
               </a>
             </div>
-            <div className="grid grid-cols-4 gap-2">
-              {[{ l: "Days", v: cd.d }, { l: "Hrs", v: cd.h }, { l: "Min", v: cd.m }, { l: "Sec", v: cd.s }].map((c) => (
-                <div key={c.l} className="glass rounded-2xl p-4 text-center">
-                  <div className="font-mono text-3xl font-semibold tracking-tight tabular-nums md:text-4xl">
-                    {String(c.v).padStart(2, "0")}
-                  </div>
-                  <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">{c.l}</div>
-                </div>
-              ))}
-            </div>
+            <Countdown iso={featured.starts_at} />
+
           </div>
         </motion.div>
 
