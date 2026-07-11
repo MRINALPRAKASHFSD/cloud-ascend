@@ -70,7 +70,7 @@ export function Events() {
 
   const featured = events[0];
   const list = filter === "All" ? events : events.filter((e) => e.tag === filter);
-  const cd = useCountdown(featured?.starts_at ?? null);
+  
 
   if (!featured) {
     return (
