@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 
 type Ripple = { id: number; x: number; y: number };
@@ -11,29 +11,47 @@ export function CursorGlow() {
   const [visible, setVisible] = useState(false);
   const [interactive, setInteractive] = useState(false);
   const [ripples, setRipples] = useState<Ripple[]>([]);
+  const rafRef = useRef<number | null>(null);
+  const pending = useRef<{ px: number; py: number; inter: boolean } | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouch) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isTouch || reduced) return;
     setVisible(true);
 
+    let lastInter = false;
+
+    const flush = () => {
+      rafRef.current = null;
+      const p = pending.current;
+      if (!p) return;
+      x.set(p.px);
+      y.set(p.py);
+      if (p.inter !== lastInter) {
+        lastInter = p.inter;
+        setInteractive(p.inter);
+      }
+    };
+
     const move = (e: MouseEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
       const el = e.target as HTMLElement | null;
       const inter = !!el?.closest?.("a,button,[role='button'],input,textarea,summary,label");
-      setInteractive(inter);
+      pending.current = { px: e.clientX, py: e.clientY, inter };
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(flush);
     };
     const click = (e: MouseEvent) => {
       const id = Date.now() + Math.random();
       setRipples((r) => [...r, { id, x: e.clientX, y: e.clientY }]);
-      setTimeout(() => setRipples((r) => r.filter((rr) => rr.id !== id)), 700);
+      window.setTimeout(() => setRipples((r) => r.filter((rr) => rr.id !== id)), 700);
     };
-    window.addEventListener("mousemove", move);
+    window.addEventListener("mousemove", move, { passive: true });
     window.addEventListener("mousedown", click);
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mousedown", click);
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
   }, [x, y]);
 
@@ -42,7 +60,7 @@ export function CursorGlow() {
     <>
       <motion.div
         aria-hidden
-        style={{ x: sx, y: sy }}
+        style={{ x: sx, y: sy, willChange: "transform" }}
         className="pointer-events-none fixed left-0 top-0 z-[60] -translate-x-1/2 -translate-y-1/2"
       >
         <motion.div
@@ -52,11 +70,11 @@ export function CursorGlow() {
           style={{
             background:
               "radial-gradient(circle, color-mix(in oklab, var(--cyan-brand) 40%, transparent), color-mix(in oklab, var(--blue-brand) 12%, transparent) 40%, transparent 70%)",
+            willChange: "transform, opacity",
           }}
         />
       </motion.div>
 
-      {/* click ripples */}
       <AnimatePresence>
         {ripples.map((r) => (
           <motion.span
@@ -66,7 +84,7 @@ export function CursorGlow() {
             animate={{ opacity: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            style={{ left: r.x, top: r.y }}
+            style={{ left: r.x, top: r.y, willChange: "transform, opacity" }}
             className="pointer-events-none fixed z-[60] h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-brand/50"
           />
         ))}
