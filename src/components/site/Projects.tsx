@@ -69,46 +69,7 @@ export function Projects() {
           <motion.div layout className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-[340px]">
             <AnimatePresence mode="popLayout">
               {list.map((p, i) => (
-                <motion.article
-                  key={p.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.55, delay: i * 0.05 }}
-                  whileHover={{ y: -8 }}
-                  className={`glass gradient-border group relative overflow-hidden rounded-3xl ${p.featured ? "md:col-span-2 md:row-span-1" : ""}`}
-                >
-                  <div className="relative h-40 overflow-hidden" style={{ background: p.gradient ?? "linear-gradient(135deg,#7DD3FC,#3B6FE0)" }}>
-                    <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ background: "radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,0.6), transparent 60%)" }} />
-                    <div className="absolute inset-0 grid-bg opacity-30" />
-                    <svg className="absolute inset-x-0 bottom-0 h-24 w-full" viewBox="0 0 400 100" preserveAspectRatio="none">
-                      <path d="M0,80 C100,20 300,120 400,40 L400,100 L0,100 Z" fill="rgba(255,255,255,0.08)" />
-                    </svg>
-                    <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-black/30 px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest text-white backdrop-blur">
-                      <CircleDot className="h-3 w-3" />
-                      {p.lifecycle}
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-cyan-brand">
-                      <span className="glass rounded-full px-2 py-0.5">{p.category}</span>
-                    </div>
-                    <h3 className="mt-3 text-xl font-semibold tracking-tight">{p.title}</h3>
-                    {p.description && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.description}</p>}
-                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {p.stack.map((s) => (
-                          <span key={s} className="glass rounded-full px-2 py-0.5 text-[10px] text-muted-foreground">{s}</span>
-                        ))}
-                      </div>
-                      <div className="flex gap-1.5">
-                        {p.github_url && <a href={p.github_url} target="_blank" rel="noreferrer" className="glass grid h-8 w-8 place-items-center rounded-full hover:bg-white/10"><Github className="h-3.5 w-3.5" /></a>}
-                        {p.website_url && <a href={p.website_url} target="_blank" rel="noreferrer" className="glass grid h-8 w-8 place-items-center rounded-full hover:bg-white/10"><ExternalLink className="h-3.5 w-3.5" /></a>}
-                      </div>
-                    </div>
-                  </div>
-                </motion.article>
+                <ProjectCard key={p.id} p={p} i={i} />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -117,3 +78,49 @@ export function Projects() {
     </section>
   );
 }
+
+const ProjectCard = memo(function ProjectCard({ p, i }: { p: PublicProject; i: number }) {
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.55, delay: Math.min(i, 6) * 0.05 }}
+      whileHover={{ y: -8 }}
+      style={{ willChange: "transform" }}
+      className={`glass gradient-border group relative overflow-hidden rounded-3xl ${p.featured ? "md:col-span-2 md:row-span-1" : ""}`}
+    >
+      <div className="relative h-40 overflow-hidden" style={{ background: p.gradient ?? "linear-gradient(135deg,#7DD3FC,#3B6FE0)" }}>
+        <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ background: "radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,0.6), transparent 60%)" }} />
+        <div className="absolute inset-0 grid-bg opacity-30" />
+        <svg className="absolute inset-x-0 bottom-0 h-24 w-full" viewBox="0 0 400 100" preserveAspectRatio="none">
+          <path d="M0,80 C100,20 300,120 400,40 L400,100 L0,100 Z" fill="rgba(255,255,255,0.08)" />
+        </svg>
+        <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-black/30 px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest text-white backdrop-blur">
+          <CircleDot className="h-3 w-3" />
+          {p.lifecycle}
+        </div>
+      </div>
+      <div className="p-6">
+        <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-cyan-brand">
+          <span className="glass rounded-full px-2 py-0.5">{p.category}</span>
+        </div>
+        <h3 className="mt-3 text-xl font-semibold tracking-tight">{p.title}</h3>
+        {p.description && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.description}</p>}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-1.5">
+            {p.stack.map((s) => (
+              <span key={s} className="glass rounded-full px-2 py-0.5 text-[10px] text-muted-foreground">{s}</span>
+            ))}
+          </div>
+          <div className="flex gap-1.5">
+            {p.github_url && <a href={p.github_url} target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-8 w-8 place-items-center rounded-full hover:bg-white/10"><Github className="h-3.5 w-3.5" /></a>}
+            {p.website_url && <a href={p.website_url} target="_blank" rel="noreferrer" aria-label="Website" className="glass grid h-8 w-8 place-items-center rounded-full hover:bg-white/10"><ExternalLink className="h-3.5 w-3.5" /></a>}
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+});
+
