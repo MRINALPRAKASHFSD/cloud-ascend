@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send, Github, Linkedin, Twitter, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Github, Linkedin, Twitter, CheckCircle2, type LucideIcon } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
+import { usePublicContactInfo, type PublicContactInfo } from "@/lib/usePublicCms";
+
+const fallback: PublicContactInfo = {
+  email: "coe.cloud@krmangalam.edu.in",
+  phone: "+91 124 XXX XXXX",
+  address: "Sohna Road, Gurugram, HR",
+  map_url: "https://www.openstreetmap.org/export/embed.html?bbox=77.075%2C28.35%2C77.15%2C28.42&layer=mapnik&marker=28.39%2C77.11",
+  hours: null,
+  socials: {},
+};
+
+const SOCIAL_ICONS: Record<string, LucideIcon> = { github: Github, linkedin: Linkedin, twitter: Twitter };
 
 export function Contact() {
+  const { data: info } = usePublicContactInfo(fallback);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const socialEntries = Object.entries(info.socials ?? {}).filter(([, url]) => !!url);
 
   return (
     <section id="contact" className="relative py-32">
@@ -22,27 +37,42 @@ export function Contact() {
             <h3 className="text-2xl font-semibold tracking-tight">Reach the Center</h3>
             <p className="mt-2 text-sm text-muted-foreground">Center of Excellence — Cloud Computing<br />K.R. Mangalam University, Sohna, Gurugram.</p>
             <ul className="mt-8 space-y-4 text-sm">
-              <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><Mail className="h-4 w-4 text-cyan-brand" /></span> coe.cloud@krmangalam.edu.in</li>
-              <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><Phone className="h-4 w-4 text-cyan-brand" /></span> +91 124 XXX XXXX</li>
-              <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><MapPin className="h-4 w-4 text-cyan-brand" /></span> Sohna Road, Gurugram, HR</li>
+              {info.email && <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><Mail className="h-4 w-4 text-cyan-brand" /></span> <a href={`mailto:${info.email}`} className="hover:text-cyan-brand transition-colors">{info.email}</a></li>}
+              {info.phone && <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><Phone className="h-4 w-4 text-cyan-brand" /></span> {info.phone}</li>}
+              {info.address && <li className="flex items-center gap-3"><span className="glass grid h-9 w-9 place-items-center rounded-xl"><MapPin className="h-4 w-4 text-cyan-brand" /></span> {info.address}</li>}
             </ul>
 
-            <div className="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-white/5">
-              <iframe
-                title="KRMU Map"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=77.075%2C28.35%2C77.15%2C28.42&layer=mapnik&marker=28.39%2C77.11"
-                className="h-full w-full grayscale-[0.4] contrast-125"
-                loading="lazy"
-              />
-            </div>
+            {info.map_url && (
+              <div className="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-white/5">
+                <iframe
+                  title="KRMU Map"
+                  src={info.map_url}
+                  className="h-full w-full grayscale-[0.4] contrast-125"
+                  loading="lazy"
+                />
+              </div>
+            )}
 
-            <div className="mt-6 flex gap-2">
-              {[Github, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="glass grid h-10 w-10 place-items-center rounded-full transition-colors hover:bg-white/10">
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
+            {(socialEntries.length > 0 || true) && (
+              <div className="mt-6 flex gap-2">
+                {socialEntries.length > 0 ? (
+                  socialEntries.map(([key, url]) => {
+                    const Icon = SOCIAL_ICONS[key.toLowerCase()] ?? Github;
+                    return (
+                      <a key={key} href={url} target="_blank" rel="noreferrer" className="glass grid h-10 w-10 place-items-center rounded-full transition-colors hover:bg-white/10">
+                        <Icon className="h-4 w-4" />
+                      </a>
+                    );
+                  })
+                ) : (
+                  [Github, Linkedin, Twitter].map((Icon, i) => (
+                    <a key={i} href="#" className="glass grid h-10 w-10 place-items-center rounded-full transition-colors hover:bg-white/10">
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  ))
+                )}
+              </div>
+            )}
           </div>
 
           <form
