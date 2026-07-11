@@ -88,46 +88,7 @@ export function Members() {
           <motion.ul layout className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <AnimatePresence mode="popLayout">
               {list.map((m, i) => (
-                <motion.li
-                  key={m.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, delay: i * 0.04 }}
-                >
-                  <TiltCard className="glass gradient-border group relative h-full overflow-hidden rounded-3xl p-6">
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `radial-gradient(300px 200px at 30% 0%, hsla(${m.hue}, 80%, 65%, 0.14), transparent 70%)` }} />
-                    <div className="relative" style={{ transform: "translateZ(30px)" }}>
-                      <div
-                        className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full text-2xl font-semibold"
-                        style={{ background: `linear-gradient(135deg, hsl(${m.hue} 70% 62%), hsl(${(m.hue + 25) % 360} 70% 55%))` }}
-                      >
-                        {m.avatar_url ? (
-                          <img src={m.avatar_url} alt={m.name} className="h-full w-full object-cover" loading="lazy" />
-                        ) : (
-                          <span className="text-white/95">{m.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}</span>
-                        )}
-                        <span className="absolute inset-0 rounded-full opacity-50 blur-xl" style={{ background: `hsl(${m.hue} 70% 62%)` }} />
-                      </div>
-                      <div className="mt-5 flex items-center gap-2">
-                        <span className="glass rounded-full px-2 py-0.5 text-[10px] uppercase tracking-widest text-cyan-brand">{m.role_label}</span>
-                      </div>
-                      <h4 className="mt-2 text-lg font-semibold tracking-tight">{m.name}</h4>
-                      {m.position && <p className="text-xs text-muted-foreground">{m.position}</p>}
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {m.skills.map((s) => (
-                          <span key={s} className="glass rounded-full px-2 py-0.5 text-[10px] text-muted-foreground">{s}</span>
-                        ))}
-                      </div>
-                      <div className="mt-5 flex gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        {m.linkedin_url && <a href={m.linkedin_url} target="_blank" rel="noreferrer" className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Linkedin className="h-3.5 w-3.5" /></a>}
-                        {m.github_url && <a href={m.github_url} target="_blank" rel="noreferrer" className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Github className="h-3.5 w-3.5" /></a>}
-                        {m.email && <a href={`mailto:${m.email}`} className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Mail className="h-3.5 w-3.5" /></a>}
-                      </div>
-                    </div>
-                  </TiltCard>
-                </motion.li>
+                <MemberCard key={m.id} m={m} i={i} />
               ))}
             </AnimatePresence>
           </motion.ul>
@@ -136,3 +97,49 @@ export function Members() {
     </section>
   );
 }
+
+const MemberCard = memo(function MemberCard({ m, i }: { m: PublicMember; i: number }) {
+  return (
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, delay: Math.min(i, 8) * 0.04 }}
+      style={{ willChange: "transform" }}
+    >
+      <TiltCard className="glass gradient-border group relative h-full overflow-hidden rounded-3xl p-6">
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `radial-gradient(300px 200px at 30% 0%, hsla(${m.hue}, 80%, 65%, 0.14), transparent 70%)` }} />
+        <div className="relative" style={{ transform: "translateZ(30px)" }}>
+          <div
+            className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full text-2xl font-semibold"
+            style={{ background: `linear-gradient(135deg, hsl(${m.hue} 70% 62%), hsl(${(m.hue + 25) % 360} 70% 55%))` }}
+          >
+            {m.avatar_url ? (
+              <img src={m.avatar_url} alt={m.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+            ) : (
+              <span className="text-white/95">{m.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}</span>
+            )}
+            <span className="absolute inset-0 rounded-full opacity-50 blur-xl" style={{ background: `hsl(${m.hue} 70% 62%)` }} />
+          </div>
+          <div className="mt-5 flex items-center gap-2">
+            <span className="glass rounded-full px-2 py-0.5 text-[10px] uppercase tracking-widest text-cyan-brand">{m.role_label}</span>
+          </div>
+          <h4 className="mt-2 text-lg font-semibold tracking-tight">{m.name}</h4>
+          {m.position && <p className="text-xs text-muted-foreground">{m.position}</p>}
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {m.skills.map((s) => (
+              <span key={s} className="glass rounded-full px-2 py-0.5 text-[10px] text-muted-foreground">{s}</span>
+            ))}
+          </div>
+          <div className="mt-5 flex gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            {m.linkedin_url && <a href={m.linkedin_url} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Linkedin className="h-3.5 w-3.5" /></a>}
+            {m.github_url && <a href={m.github_url} target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Github className="h-3.5 w-3.5" /></a>}
+            {m.email && <a href={`mailto:${m.email}`} aria-label="Email" className="glass grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-white/10"><Mail className="h-3.5 w-3.5" /></a>}
+          </div>
+        </div>
+      </TiltCard>
+    </motion.li>
+  );
+});
+
