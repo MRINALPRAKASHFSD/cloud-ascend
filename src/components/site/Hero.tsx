@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles, Cloud, Server, Database, Cpu, Zap } from "lucide-react";
+import { ArrowRight, Cloud, Server, Database, Cpu, Zap } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { usePublicHeroStats, type PublicHeroStat } from "@/lib/usePublicCms";
@@ -39,8 +39,8 @@ export function Hero() {
               transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="text-balance mt-6 text-[clamp(2.5rem,6.2vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
             >
-              Building the future{" "}
-              <span className="gradient-text">with cloud computing.</span>
+              Cloud Ascend <br />
+              <span className="gradient-text">Center of Excellence.</span>
             </motion.h1>
 
             <motion.p
@@ -49,8 +49,7 @@ export function Hero() {
               transition={{ duration: 0.9, delay: 0.25 }}
               className="text-balance mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground"
             >
-              A student-led lab engineering distributed systems, serverless architectures and
-              AI-native infrastructure — where curiosity meets planet-scale technology.
+              A student-led lab at K.R. Mangalam University engineering distributed systems and serverless architectures.
             </motion.p>
 
             <motion.div
@@ -74,7 +73,6 @@ export function Hero() {
                   href="#projects"
                   className="glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/[0.08]"
                 >
-                  <Sparkles className="h-4 w-4 text-cyan-brand" />
                   View Projects
                 </a>
               </MagneticButton>
