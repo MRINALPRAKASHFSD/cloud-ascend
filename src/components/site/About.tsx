@@ -3,9 +3,29 @@ import { Target, Compass, Rocket, GraduationCap, Users, Award } from "lucide-rea
 import { SectionHeader } from "./SectionHeader";
 
 const pillars = [
-  { icon: Target, title: "Mission", desc: "Cultivate cloud-native engineers who ship at planet scale, blending research rigor with product craft." },
-  { icon: Compass, title: "Vision", desc: "To be South Asia's most respected student center for distributed systems, edge, and AI infrastructure." },
-  { icon: Rocket, title: "Objectives", desc: "Launch open-source projects, run hackathons, industry sprints and certification programs every semester." },
+  { 
+    icon: Target, 
+    title: "Mission", 
+    desc: "To bridge academia and industry through hands-on cloud training and certifications, drive research and innovation in cloud and AI technologies, and foster startups and real-world solutions through strong industry partnerships." 
+  },
+  { 
+    icon: Compass, 
+    title: "Vision", 
+    desc: "To be a leading centre for cloud computing research, training, and innovation — empowering students and professionals with industry-ready skills for a secure, scalable digital future." 
+  },
+  { 
+    icon: Rocket, 
+    title: "Objectives", 
+    items: [
+      { label: "Skill Development & Training", text: "Provide hands-on training, certifications, and workshops to develop cloud computing expertise." },
+      { label: "Research & Innovation", text: "Foster advanced research in cloud technologies, AI, and big data to develop innovative solutions for emerging needs." },
+      { label: "Industry Collaboration", text: "Partner with tech firms and enterprises to bridge the gap between academia and industry." },
+      { label: "Entrepreneurship & Startups", text: "Support cloud-based startups and incubate innovative projects for real-world impact." },
+      { label: "Smart & Scalable Solutions", text: "Develop AI-driven, cloud-enabled smart solutions to enhance efficiency across industries." },
+      { label: "Sustainable Digital Transformation", text: "Promote cost-effective, scalable, and secure cloud adoption for businesses and society." },
+      { label: "Faculty & Student Empowerment", text: "Equip educators and learners with state-of-the-art cloud computing knowledge and tools." },
+    ] 
+  },
 ];
 
 const timeline = [
@@ -25,7 +45,7 @@ export function About() {
           description="We're a Center of Excellence at K.R. Mangalam University — a lab where students design, build and operate real distributed systems alongside faculty and industry mentors."
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-16 grid gap-6 md:grid-cols-3 items-start">
           {pillars.map((p, i) => (
             <motion.div
               key={p.title}
@@ -45,7 +65,25 @@ export function About() {
                   <p.icon className="h-5 w-5 text-cyan-brand" />
                 </div>
                 <h3 className="mt-6 text-xl font-semibold tracking-tight">{p.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
+                
+                {/* Paragraph description for Mission & Vision */}
+                {p.desc && (
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
+                )}
+
+                {/* Structured list for Objectives */}
+                {p.items && (
+                  <ul className="mt-4 space-y-3">
+                    {p.items.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-muted-foreground leading-relaxed">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-brand shadow-[0_0_8px_rgba(79,209,255,0.8)]" />
+                        <span>
+                          <strong className="font-medium text-foreground">{item.label}</strong> — {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </motion.div>
           ))}

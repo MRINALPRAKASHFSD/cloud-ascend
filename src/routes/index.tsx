@@ -3,6 +3,7 @@ import { AuroraBackground } from "@/components/site/AuroraBackground";
 import { CursorGlow } from "@/components/site/CursorGlow";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
+import { Collaboration } from "@/components/site/Collaboration";
 import { About } from "@/components/site/About";
 import { Events } from "@/components/site/Events";
 import { Projects } from "@/components/site/Projects";
@@ -14,7 +15,6 @@ import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { CommandPalette } from "@/components/site/CommandPalette";
 import { BootLoader } from "@/components/site/BootLoader";
-
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -31,6 +31,7 @@ function Home() {
 
       <main>
         <Hero />
+        <Collaboration />
         <About />
         <Events />
         <Projects />
